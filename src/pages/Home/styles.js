@@ -51,4 +51,26 @@ export const Search = styled.div`
   }
 `
 
-export const Categories = styled.div``
+export const Categories = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  a {
+    display: flex;
+    align-items: center;
+
+    color: #222;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      color: #585858;
+    }
+
+    strong {
+      margin-left: 10px;
+    }
+  }
+`
