@@ -34,7 +34,14 @@ export const Navigation = styled.nav`
     align-items: center;
 
     li {
-      a {
+      button {
+        border: none;
+        cursor: pointer;
+        background: transparent;
+      }
+
+      a,
+      button {
         color: #222;
         font-weight: 800;
         font-size: 14px;

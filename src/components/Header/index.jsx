@@ -2,10 +2,15 @@ import { Link } from 'react-router-dom'
 
 import * as S from './styles'
 
-import { isLogged } from 'utils/AuthHandler'
+import { isLogged, doLogout } from 'utils/AuthHandler'
 
 const Header = () => {
   const logged = isLogged()
+
+  const handleLogout = () => {
+    doLogout()
+    window.location.href = '/'
+  }
 
   return (
     <S.Container>
@@ -21,7 +26,7 @@ const Header = () => {
                   <Link to="/my-account">Minha COnta</Link>
                 </li>
                 <li>
-                  <Link to="/logout">Sair</Link>
+                  <button onClick={handleLogout}>Sair</button>
                 </li>
                 <li>
                   <Link to="/post-and-ad" className="button">
