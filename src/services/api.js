@@ -62,7 +62,23 @@ const api = {
     })
 
     return json
-  }
+  },
+
+  register: async (name, email, password, stateLocation) => {
+    const json = await apiFetchPost('/user/signup', {
+      name, email, password, state:  stateLocation
+    })
+
+    return json
+  },
+
+  getStates: async () => {
+    const json = await apiFetchGet('/states')
+
+    return json.states
+  },
+
+
 }
 
 export default () => api

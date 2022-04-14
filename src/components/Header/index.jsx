@@ -23,7 +23,7 @@ const Header = () => {
             {logged && (
               <>
                 <li>
-                  <Link to="/my-account">Minha COnta</Link>
+                  <Link to="/my-account">Minha Conta</Link>
                 </li>
                 <li>
                   <button onClick={handleLogout}>Sair</button>
@@ -41,7 +41,7 @@ const Header = () => {
                   <Link to="/signin">Login</Link>
                 </li>
                 <li>
-                  <Link to="/signup">Logout</Link>
+                  <Link to="/signup">Cadastre-se</Link>
                 </li>
               </>
             )}
