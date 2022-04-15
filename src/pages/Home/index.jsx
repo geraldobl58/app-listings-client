@@ -75,7 +75,9 @@ const Home = () => {
               <Card key={index} data={item} />
             ))}
           </S.ContainerCards>
-          <Link to="/ads">Ver todos</Link>
+          <S.AllLink>
+            <Link to="/ads">Ver todos</Link>
+          </S.AllLink>
         </S.Recents>
       </S.Content>
     </S.Container>

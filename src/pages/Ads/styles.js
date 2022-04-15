@@ -60,6 +60,15 @@ export const RightSidebar = styled.div`
   background-color: #fff;
 `
 
+export const CardContent = styled.div`
+  display: flex;
+`
+
+export const TitleCard = styled.h1`
+  font-size: 22px;
+  padding: 20px;
+`
+
 export const Title = styled.div`
   font-size: 14px;
 `

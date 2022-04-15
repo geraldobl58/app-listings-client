@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
@@ -7,6 +8,8 @@ import Card from 'components/Card'
 import useApi from 'services/api'
 
 import * as S from './styles'
+
+let timer
 
 const Ads = () => {
   const api = useApi()
@@ -31,6 +34,20 @@ const Ads = () => {
   const [categories, setCategories] = useState([])
   const [adList, setAdList] = useState([])
 
+  const [resultOpcity, setResultOpcity] = useState(1)
+
+  const getAdsList = async () => {
+    const json = await api.getAds({
+      sort: 'desc',
+      limit: 9,
+      q,
+      cat,
+      state
+    })
+    setAdList(json.ads)
+    setResultOpcity(1)
+  }
+
   useEffect(() => {
     const getStates = async () => {
       const slist = await api.getStates()
@@ -45,18 +62,6 @@ const Ads = () => {
       setCategories(cats)
     }
     getCategories()
-  }, [api])
-
-  useEffect(() => {
-    const getRecents = async () => {
-      const json = await api.getAds({
-        sort: 'desc',
-        limit: 9
-      })
-
-      setAdList(json.ads)
-    }
-    getRecents()
   }, [api])
 
   useEffect(() => {
@@ -77,6 +82,13 @@ const Ads = () => {
     history.replace({
       search: `?${queryString.join('&')}`
     })
+
+    if (timer) {
+      clearTimeout(timer)
+    }
+
+    timer = setTimeout(getAdsList, 2000)
+    setResultOpcity(0.3)
   }, [q, cat, state, history])
 
   return (
@@ -116,10 +128,16 @@ const Ads = () => {
                 ))}
               </ul>
             </S.ListCategories>
-            <button>Entrar</button>
           </form>
         </S.LeftSidebar>
-        <S.RightSidebar>Right</S.RightSidebar>
+        <S.RightSidebar>
+          <S.TitleCard>Resultado</S.TitleCard>
+          <S.CardContent style={{ opacity: resultOpcity }}>
+            {adList.map((item, index) => (
+              <Card key={index} data={item} className="card" />
+            ))}
+          </S.CardContent>
+        </S.RightSidebar>
       </S.Content>
     </S.Container>
   )

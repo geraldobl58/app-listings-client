@@ -80,6 +80,23 @@ export const Recents = styled.div`
   margin-bottom: 50px;
 `
 
+export const AllLink = styled.div`
+  text-align: center;
+  margin-top: 50px;
+
+  a {
+    display: block;
+    color: #fff;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 800;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: #157d8b;
+  }
+`
+
 export const Title = styled.h1`
   color: #222;
   font-size: 32px;
