@@ -9,7 +9,9 @@ export const Content = styled.div`
   margin: 0 auto;
 
   padding: 10px 0;
+`
 
+export const BoxDefault = styled.div`
   display: flex;
   justify-content: space-between;
 `
@@ -42,14 +44,35 @@ export const Box = styled.div`
 
 export const Title = styled.h3``
 
-export const Date = styled.p``
+export const Date = styled.p`
+  font-size: 12px;
+  margin-top: 20px;
+`
 
-export const Descrition = styled.p``
+export const Descrition = styled.p`
+  font-size: 12px;
+  margin-top: 20px;
+`
 
-export const Views = styled.p``
+export const Views = styled.p`
+  margin-top: 20px;
+  font-size: 12px;
+`
 
 export const Price = styled.div``
 
 export const UserInfo = styled.div`
   display: grid;
 `
+
+export const Related = styled.div`
+  margin-top: 20px;
+
+  display: flex;
+`
+
+export const BoxRelatedBottom = styled.div`
+  margin-top: 20px;
+`
+
+export const Bread = styled.div``
