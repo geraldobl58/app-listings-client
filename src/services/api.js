@@ -3,8 +3,8 @@
 import Cookies from 'js-cookie'
 import qs from 'qs'
 
-// const BASEAPI = 'http://alunos.b7web.com.br:501'
-const BASEAPI = 'http://localhost:3333'
+const BASEAPI = 'http://alunos.b7web.com.br:501'
+// const BASEAPI = 'http://localhost:3333'
 
 const apiFetchPost = async (endpoint, body) => {
   if (!body.token) {
@@ -87,6 +87,12 @@ const api = {
 
   getAds: async (options) => {
     const json = await apiFetchGet('/ad/list', options)
+
+    return json
+  },
+
+  getAd: async (id, other = false) => {
+    const json = await apiFetchGet('/ad/item', { id, other })
 
     return json
   }
