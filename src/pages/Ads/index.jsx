@@ -26,6 +26,9 @@ const Ads = () => {
   const queryCat = query.get('cat') != null ? query.get('cat') : ''
   const queryState = query.get('state') != null ? query.get('state') : ''
 
+  const [adsTotal, setAdsTotal] = useState(0)
+  const [pageCount, setPageCount] = useState(0)
+
   const [q, setQ] = useState(querySearch)
   const [cat, setCat] = useState(queryCat)
   const [state, setState] = useState(queryState)
@@ -38,19 +41,34 @@ const Ads = () => {
 
   const [resultOpcity, setResultOpcity] = useState(1)
 
+  const [currentPage, setCurrentPage] = useState(1)
+
   const getAdsList = async () => {
     setLoading(true)
+
+    let offset = (currentPage - 1) * 2
+
     const json = await api.getAds({
       sort: 'desc',
       limit: 9,
       q,
       cat,
-      state
+      state,
+      offset
     })
     setLoading(false)
     setAdList(json.ads)
     setResultOpcity(1)
+    setAdsTotal(json.total)
   }
+
+  useEffect(() => {
+    if (adList.length > 0) {
+      setPageCount(Math.ceil(adsTotal / adList.length))
+    } else {
+      setPageCount(0)
+    }
+  }, [adsTotal])
 
   useEffect(() => {
     const getStates = async () => {
@@ -93,7 +111,19 @@ const Ads = () => {
 
     timer = setTimeout(getAdsList, 2000)
     setResultOpcity(0.3)
+    setCurrentPage(1)
   }, [q, cat, state, history])
+
+  let pagination = []
+
+  for (let i = 1; i <= pageCount; i++) {
+    pagination.push(i)
+  }
+
+  useEffect(() => {
+    setResultOpcity(0.3)
+    getAdsList()
+  }, [currentPage])
 
   return (
     <S.Container>
@@ -136,7 +166,9 @@ const Ads = () => {
         </S.LeftSidebar>
         <S.RightSidebar>
           <S.TitleCard>Resultado</S.TitleCard>
-          {loading && <S.ListLoading>Carregando...</S.ListLoading>}
+          {loading && adList.length === 0 && (
+            <S.ListLoading>Carregando...</S.ListLoading>
+          )}
           {!loading && adList.length === 0 && (
             <S.ListLoading>
               Nenhum resultado encontrado, tente novamnete!
@@ -147,6 +179,19 @@ const Ads = () => {
               <Card key={index} data={item} className="card" />
             ))}
           </S.CardContent>
+          <S.Pagination>
+            {pagination.map((item, index) => (
+              <S.PaginationContent
+                key={index}
+                className={
+                  item === currentPage ? 'pageItem active' : 'pageItem'
+                }
+                onClick={() => setCurrentPage(item)}
+              >
+                {item}
+              </S.PaginationContent>
+            ))}
+          </S.Pagination>
         </S.RightSidebar>
       </S.Content>
     </S.Container>

@@ -110,3 +110,38 @@ export const ListLoading = styled.div`
   margin-top: 50px;
   margin-bottom: 50px;
 `
+
+export const Pagination = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 10px 5px;
+`
+
+export const PaginationContent = styled.div`
+  width: 30px;
+  height: 30px;
+
+  color: #4979a2;
+  border: 1px solid #222;
+
+  border-radius: 50%;
+
+  font-size: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 5px;
+
+  cursor: pointer;
+
+  &.pageItem {
+    &.active {
+      color: #fff;
+      background-color: #222;
+    }
+  }
+`
