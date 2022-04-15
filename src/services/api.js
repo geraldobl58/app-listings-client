@@ -3,6 +3,7 @@
 import Cookies from 'js-cookie'
 import qs from 'qs'
 
+// const BASEAPI = 'http://alunos.b7web.com.br:501'
 const BASEAPI = 'http://localhost:3333'
 
 const apiFetchPost = async (endpoint, body) => {
@@ -42,7 +43,7 @@ const apiFetchGet = async (endpoint, body = []) => {
     }
   }
 
-  const res = await fetch(`${BASEAPI}${endpoint}${qs.stringify(body)}`)
+  const res = await fetch(`${BASEAPI}${endpoint}?${qs.stringify(body)}`)
 
   const json = await res.json()
 
@@ -82,6 +83,12 @@ const api = {
     const json = await apiFetchGet('/categories')
 
     return json.categories
+  },
+
+  getAds: async (options) => {
+    const json = await apiFetchGet('/ad/list', options)
+
+    return json
   }
 }
 

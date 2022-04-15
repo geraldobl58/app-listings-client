@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+import Card from 'components/Card'
+
 import useApi from 'services/api'
 
 import * as S from './styles'
@@ -11,6 +13,7 @@ const Home = () => {
 
   const [stateList, setStateList] = useState([])
   const [categories, setCategories] = useState([])
+  const [adList, setAdList] = useState([])
 
   useEffect(() => {
     const getStates = async () => {
@@ -26,6 +29,18 @@ const Home = () => {
       setCategories(cats)
     }
     getCategories()
+  }, [api])
+
+  useEffect(() => {
+    const getRecents = async () => {
+      const json = await api.getAds({
+        sort: 'desc',
+        limit: 9
+      })
+
+      setAdList(json.ads)
+    }
+    getRecents()
   }, [api])
 
   return (
@@ -52,6 +67,16 @@ const Home = () => {
             </Link>
           ))}
         </S.Categories>
+
+        <S.Recents>
+          <S.Title>Recentes</S.Title>
+          <S.ContainerCards>
+            {adList.map((item, index) => (
+              <Card key={index} data={item} />
+            ))}
+          </S.ContainerCards>
+          <Link to="/ads">Ver todos</Link>
+        </S.Recents>
       </S.Content>
     </S.Container>
   )
