@@ -34,9 +34,12 @@ const Ads = () => {
   const [categories, setCategories] = useState([])
   const [adList, setAdList] = useState([])
 
+  const [loading, setLoading] = useState(true)
+
   const [resultOpcity, setResultOpcity] = useState(1)
 
   const getAdsList = async () => {
+    setLoading(true)
     const json = await api.getAds({
       sort: 'desc',
       limit: 9,
@@ -44,6 +47,7 @@ const Ads = () => {
       cat,
       state
     })
+    setLoading(false)
     setAdList(json.ads)
     setResultOpcity(1)
   }
@@ -132,6 +136,12 @@ const Ads = () => {
         </S.LeftSidebar>
         <S.RightSidebar>
           <S.TitleCard>Resultado</S.TitleCard>
+          {loading && <S.ListLoading>Carregando...</S.ListLoading>}
+          {!loading && adList.length === 0 && (
+            <S.ListLoading>
+              Nenhum resultado encontrado, tente novamnete!
+            </S.ListLoading>
+          )}
           <S.CardContent style={{ opacity: resultOpcity }}>
             {adList.map((item, index) => (
               <Card key={index} data={item} className="card" />

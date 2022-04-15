@@ -104,3 +104,9 @@ export const ListCategories = styled.div`
     }
   }
 `
+
+export const ListLoading = styled.div`
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+`
