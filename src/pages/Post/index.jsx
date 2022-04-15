@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useRef, useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import MaskedInput from 'react-text-mask'
 
@@ -16,6 +17,8 @@ const Post = () => {
 
   const fileField = useRef()
 
+  const history = useHistory()
+
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
@@ -31,14 +34,42 @@ const Post = () => {
     setDisabled(true)
     setError('')
 
-    // const json = await api.login(email, password)
+    const errors = []
 
-    // if (json.error) {
-    //   setError(json.error)
-    // } else {
-    //   doLogin(json.token, rememberPassword)
-    //   window.location.href = '/'
-    // }
+    if (!title.trim()) {
+      errors.push('Whoops: Sem título')
+    }
+
+    if (!category.trim()) {
+      errors.push('Whoops: Sem categoria')
+    }
+
+    if (errors.length === 0) {
+      const formData = new FormData()
+
+      formData.append('title', title)
+      formData.append('price', price)
+      formData.append('priceneg', priceNegotiable)
+      formData.append('desc', description)
+      formData.append('cat', category)
+
+      if (fileField.current.files.length > 0) {
+        for (let i = 0; i < fileField.current.files.length; i++) {
+          formData.append('img', fileField.current.files[i])
+        }
+      }
+
+      const json = await api.addAd(formData)
+
+      if (!json.error) {
+        history.push(`/ad/${json.id}`)
+        return
+      } else {
+        setError(json.error)
+      }
+    } else {
+      setError(errors.join('\n'))
+    }
 
     setDisabled(false)
   }
@@ -64,7 +95,7 @@ const Post = () => {
       {error && <Error>{error}</Error>}
       <S.Content>
         <form onSubmit={handleSubmit}>
-          <S.Title>E-mail</S.Title>
+          <S.Title>Titulo</S.Title>
           <input
             required
             type="text"
@@ -74,7 +105,6 @@ const Post = () => {
           />
           <S.Title>Categoris</S.Title>
           <select
-            require
             disabled={disabled}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -107,15 +137,8 @@ const Post = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
-          <S.Title>Imagens</S.Title>
-          <input
-            multiple
-            type="file"
-            disabled={disabled}
-            ref={fileField}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <S.Title>Imagens (Você pode enviar mais de 1 imagem)</S.Title>
+          <input multiple type="file" disabled={disabled} ref={fileField} />
           <button disabled={disabled}>Cadatsrar Anúncio</button>
         </form>
       </S.Content>
