@@ -2,12 +2,13 @@ import { Switch } from 'react-router-dom'
 
 import RouteHandler from 'components/RouteHandler'
 
-import Home from '../pages/Home'
-import About from '../pages/About'
-import SignIn from '../pages/SignIn'
-import SignUp from '../pages/SignUp'
-import Single from '../pages/Single'
-import Notfound from '../pages/Notfound'
+import Home from 'pages/Home'
+import About from 'pages/About'
+import SignIn from 'pages/SignIn'
+import SignUp from 'pages/SignUp'
+import Single from 'pages/Single'
+import Notfound from 'pages/Notfound'
+import Post from 'pages/Post'
 
 export default function Routes() {
   return (
@@ -18,7 +19,7 @@ export default function Routes() {
       <RouteHandler exact path="/signup" component={SignUp} />
       <RouteHandler exact path="/ad/:id" component={Single} />
       <RouteHandler private exact path="/post-and-ad">
-        <About />
+        <Post />
       </RouteHandler>
       <RouteHandler exact path="**" component={Notfound} />
     </Switch>
