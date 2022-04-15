@@ -8,6 +8,7 @@ import SignIn from 'pages/SignIn'
 import SignUp from 'pages/SignUp'
 import Single from 'pages/Single'
 import Notfound from 'pages/Notfound'
+import Ads from 'pages/Ads'
 import Post from 'pages/Post'
 
 export default function Routes() {
@@ -18,6 +19,7 @@ export default function Routes() {
       <RouteHandler exact path="/signin" component={SignIn} />
       <RouteHandler exact path="/signup" component={SignUp} />
       <RouteHandler exact path="/ad/:id" component={Single} />
+      <RouteHandler exact path="/ads" component={Ads} />
       <RouteHandler private exact path="/post-and-ad">
         <Post />
       </RouteHandler>
