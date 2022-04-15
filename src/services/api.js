@@ -3,8 +3,8 @@
 import Cookies from 'js-cookie'
 import qs from 'qs'
 
-const BASEAPI = 'http://alunos.b7web.com.br:501'
-// const BASEAPI = 'http://localhost:3333'
+// const BASEAPI = 'http://alunos.b7web.com.br:501'
+const BASEAPI = 'http://localhost:3333'
 
 const apiFetchPost = async (endpoint, body) => {
   if (!body.token) {
